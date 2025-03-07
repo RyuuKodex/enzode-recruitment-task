@@ -13,12 +13,26 @@
         "doctrine/doctrine-bundle": "^2.6",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.11",
+        "fakerphp/faker": "^1.24",
+        "lexik/jwt-authentication-bundle": "*",
+        "phpdocumentor/reflection-docblock": "^5.6",
+        "phpstan/phpdoc-parser": "^2.1",
+        "symfony/amqp-messenger": "7.2.*",
+        "symfony/cache": "7.2.*",
+        "symfony/console": "7.2.*",
         "symfony/dotenv": "7.2.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "7.2.*",
         "symfony/http-client": "7.2.*",
+        "symfony/messenger": "7.2.*",
         "symfony/monolog-bundle": "^3.8",
+        "symfony/property-access": "7.2.*",
+        "symfony/property-info": "7.2.*",
+        "symfony/redis-messenger": "7.2.*",
         "symfony/runtime": "7.2.*",
+        "symfony/security-bundle": "7.2.*",
+        "symfony/serializer": "7.2.*",
+        "symfony/validator": "7.2.*",
         "symfony/yaml": "7.2.*"
     },
     "config": {
@@ -64,14 +78,9 @@
             "@auto-scripts"
         ],
         "run-unit-tests": "php bin/phpunit --do-not-cache-result --testsuite unit",
-        "run-functional-tests": "php bin/phpunit --do-not-cache-result --testsuite functional",
         "run-lint-check": "./vendor/bin/php-cs-fixer fix --dry-run --using-cache no",
-        "run-lint-fix": "./vendor/bin/php-cs-fixer fix",
-        "run-phpstan-analysis": "./vendor/bin/phpstan analyse",
-        "run-all-tests": [
-            "@run-unit-tests",
-            "@run-functional-tests"
-        ]
+        "run-lint-fix": "./vendor/bin/php-cs-fixer fix --allow-risky=yes",
+        "run-phpstan-analysis": "./vendor/bin/phpstan analyse"
     },
     "conflict": {
         "symfony/symfony": "*"
@@ -83,6 +92,7 @@
         }
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^4.0",
         "friendsofphp/php-cs-fixer": "^3.8",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan": "^1.5",

@@ -8,10 +8,26 @@ services:
     environment:
       APP_ENV: "dev"
       APP_SECRET: "a9806d99cd5c1503d8af30c963c9411f"
-      DATABASE_URL: "postgresql://user:password@database:3306/symfony-bootstrap"
+      DATABASE_URL: "postgresql://user:password@database:5432/enzode-task?charset=UTF8"
+      CACHE_DSN: "redis://redis:6379"
   database:
      image: 'postgres:16'
      environment:
-      POSTGRES_DB: "symfony-bootstrap"
+      POSTGRES_DB: "enzode-task"
       POSTGRES_USER: "user"
       POSTGRES_PASSWORD: "password"
+  redis:
+      image: redis:7
+      container_name: redis
+      restart: unless-stopped
+      ports:
+          - "6379:6379"
+      command: redis-server --appendonly yes
+  rabbitmq:
+      image: 'rabbitmq:management'
+      ports:
+          - "5672:5672"
+          - "15672:15672"
+      environment:
+          RABBITMQ_DEFAULT_USER: "guest"
+          RABBITMQ_DEFAULT_PASS: "guest"

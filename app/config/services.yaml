@@ -10,3 +10,31 @@ services:
       - '../src/Entity/'
       - '../src/Migrations/'
       - '../src/Kernel.php'
+
+  App\Infrastructure\Normalizer\DecimalToStringNormalizer:
+    tags: [ 'serializer.normalizer' ]
+
+  App\Infrastructure\Service\RedisCacheService:
+    arguments:
+      $productCache: '@product_cache'
+      $reportCache: '@report_cache'
+
+  redis_product:
+    class: Redis
+    calls:
+      - method: connect
+        arguments:
+          - '%env(REDIS_HOST)%'
+          - '%env(REDIS_PORT)%'
+          - '%env(REDIS_PASSWORD)%'
+          - '%env(REDIS_DATABASE_PRODUCT)%'
+
+  redis_report:
+    class: Redis
+    calls:
+     - method: connect
+       arguments:
+         - '%env(REDIS_HOST)%'
+         - '%env(REDIS_PORT)%'
+         - '%env(REDIS_PASSWORD)%'
+         - '%env(REDIS_DATABASE_REPORT)%'

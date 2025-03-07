@@ -1,5 +1,5 @@
 controllers:
-  resource: ../src/Controller/
+  resource: ../src/UI/Action
   type: attribute
 
 kernel:
