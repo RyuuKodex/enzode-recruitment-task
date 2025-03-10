@@ -1,36 +1,22 @@
-# Symfony project bootstrap
+# Enzode recruitment task
 
-Modern Symfony (PHP) project template created in order to follow [12-Factor-App](https://12factor.net) principles. Great
-starter for small, medium and large projects.
+### Built With
 
-## Motivation
+- [PHP](https://www.php.net/)
+- [Symfony](https://symfony.com/)
+- [Docker](https://www.docker.com/)
+- [Compose](https://docs.docker.com/compose/)
 
-While working in few major IT companies in Poland, I saw how many people are struggling with creating simple, yet
-effective work environment. Sometimes people were just following Symfony Docs - they of course are good for learning,
-however they are not following the [12-Factor-App](https://12factor.net) recommendations. Also, the way how Symfony
-recommends using Docker is far from perfect, hence I created this bootstrap.
+## Getting Started
 
-## PHP, Symfony and the database
+### Installation
 
-This project is using PHP in version **8.3** and Symfony framework with version **^6.3**.  Also, the MySQL in version
-**8.2.0** is used.
+Follow these simple steps
 
-I update this repository regularly to match next PHP and Symfony versions.
+#### Clone API repository
 
-## Required tools
-
-Before we start, let's make sure that our host device has required programs. We will use `docker` and `docker compose`
-to manage containers.
-
-To create this bootstrap I used the tools in version listed below. I cannot guarantee that this configuration will work
-automatically with newer versions.
-
-```shell
-docker --version
-> Docker version 20.10.17, build 100c701
-
-docker compose version
-> Docker Compose version v2.6.1
+```bash
+git clone git@github.com:RyuuKodex/enzode-recruitment-task.git
 ```
 
 ## Building environment for development
@@ -69,73 +55,102 @@ docker compose exec app bash -ce "
 Now you're all set, you can visit the [localhost with port 80](http://localhost), you should
 see the Symfony default application web page.
 
-Also, a GET endpoint [/api/hello-world](http://localhost/api/hello-world) was added to configure and show the functional
-test environment. It will always return static data:
-```json
+# Endpoints
+
+####
+
+```http
+POST /login
+
+Dummy login to get JWT token
+```
+
+```http
+GET /api/products/report?<query params>
+
+Get products report
+
+List of params:
+  - name
+  - category
+  - price_min
+  - price_max
+```
+
+```http
+POST /api/products?<query params>
+
+Get list of products
+
+List of params:
+  - name
+  - category
+  - price_min
+  - price_max
+```
+
+```http
+POST /api/products
+
+Add product
+
+Example json
 {
-  "message": "Hello, world"
+  "name": "Name",
+  "description": "High-quality noise-canceling wireless headphones with Bluetooth 5.0.",
+  "price": 199.99,
+  "currencyId": 1,
+  "categoryId": 1,
+  "attributes": [
+    {
+      "code": "COL",
+      "value": "Blue"
+    },
+    {
+      "code": "COL",
+      "value": "Black"
+    }
+  ]
 }
 ```
 
-If for some reason you'd like to enter the container, use the command below.
+## Commands
 
-```shell
+#### Start the project
+
+```bash
+docker compose up -d
+```
+
+#### Connect to app container
+
+```bash
 docker compose exec app bash
 ```
 
-## Removing local environment
+#### Stop project
 
-You can remove local environment using the command below:
-
-```shell
+```bash
 docker compose down --remove-orphans
 ```
 
-## Assumptions
+#### CS-fixer
 
-### Custom PHP image
-
-In the main Dockerfile I used [caddy-php](https://github.com/at-cloud-pro/caddy-php-image): my own high-performance PHP
-image that uses Caddy as a runner and php-fpm as a daemon.
-
-```dockerfile
-FROM ghcr.io/at-cloud-pro/caddy-php:3.0.0 AS app
+```bash
+docker compose exec app composer run-lint-fix
 ```
 
-You're free to change it to any image and configuration you'd like. You may read
-[here](https://github.com/at-cloud-pro/caddy-php-image/README.md) what's bundled inside my image and create your own
-with my approach as a guidelines.
+#### PHP-Stan
 
-### Application logs
-
-Due to extensive configuration you will find all the logs stored in `./app/var/log` folder, including Caddy, php-fpm
-access and error logs and xdebug outputs. Also files like `dev.log`, `prod.log` will be stored with all the messages
-logged with PSR `LoggerInterface` and `monolog` package.
+```bash
+docker compose exec app composer run-phpstan-analysis
+```
 
 ### Testing
 
-Modern web applications must be well tested. To keep things simple I prepared ready to use suite for unit and functional
-tests.
-
 #### Unit
-Use the command below to run unit tests. Initially this project contains
-[one test](https://github.com/oskarbarcz/symfony-bootstrap/app/tests/NullTest.php) with one assertion
-(NullTest pattern).
+Use the command below to run unit tests.
 
-```
+```bash
 docker compose exec app composer run-unit-tests
 ```
-
-#### Functional
-
-Use the command below to run functional tests:
-
-```
-docker compose exec app composer run-functional-tests
-```
-
-Functional test is testing here the hello-world endpoint.
-
-## Troubleshooting
-
-This section will be expanded as first problem will come.

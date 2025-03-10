@@ -1,6 +1,6 @@
 FROM ghcr.io/at-cloud-pro/caddy-php:3.0.0 AS app
 
-ENV VERSION="3.0.0"
+ENV VERSION="1.0.0"
 
 RUN apt-get update  \
 && apt-get install --yes --no-install-recommends librabbitmq-dev  \
@@ -22,7 +22,12 @@ RUN chmod --recursive a+r /app \
 
 ENV APP_ENV="prod"
 
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 USER www-data:www-data
 
 HEALTHCHECK CMD curl --fail http://localhost || exit 1
 
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["php-fpm"]

@@ -1,6 +1,6 @@
 {
-    "version": "3.0.0",
-    "description": "Symfony project bootstrap",
+    "version": "1.0.0",
+    "description": "Enzode recruitment task",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
